@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import express from "express";
 import connectDB from "../config/database";
 import language from "./routes/language";
+import category from "./routes/category";
 const app = express();
 
 // Connect to MongoDB
@@ -21,6 +22,7 @@ app.get("/", (_req, res) => {
 
 
 app.use("/api/language", language);
+app.use("/api/category", category);
 
 const port = app.get("port");
 const server = app.listen(port, () =>
