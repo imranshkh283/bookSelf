@@ -38,3 +38,39 @@ export const add: RequestHandler = async (req:Request, res:Response, next:NextFu
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
     }
 }
+
+export const update = async (req:Request, res:Response, next:NextFunction) => {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(HttpStatusCodes.BAD_REQUEST)
+        .json({ errors: errors.array() });
+    }
+
+    const { id } = req.params;
+    let _id = await Category.findById(id)
+    try {
+        if(_id){
+            let cat = await Category.findByIdAndUpdate(_id, req.body);
+            res.status(HttpStatusCodes.OK).json({msg : 'Category Update Successfully' })
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+    }
+    
+}
+
+export const read : RequestHandler = async (req:Request, res: Response, next: NextFunction) => {
+
+    try {
+        let cat = await Category.find();
+        if(cat){
+            return res.status(HttpStatusCodes.OK).json({data:cat})
+        }
+    } catch (err) {
+        console.error(err.message);
+        res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
+    }
+}
