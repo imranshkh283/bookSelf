@@ -1,13 +1,14 @@
 import { Document, model, Schema } from 'mongoose';
+import { IMCommon } from '../interfaces/baseTypes';
 import { ICategory } from './Category';
 import { ISubcategory } from './Subcategory'
 
-export type TBook = {
+export type TBook = IMCommon & {
     categoryId: ICategory['_id'];
     subcategoryId: ISubcategory['_id'];
     bookname:string;
     price: number;
-
+    
 }
 
 export interface IBook extends TBook, Document {}
@@ -31,10 +32,6 @@ const bookSchema: Schema = new Schema({
         type:Number,
         required: true,
     },
-    date: {
-        type: Date,
-        default: Date.now,
-    }
 })
 
 const Book = model<IBook>('Book',bookSchema);

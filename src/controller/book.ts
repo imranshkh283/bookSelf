@@ -48,7 +48,7 @@ export const add = async (req: Request, res: Response, next: NextFunction) => {
             categoryId,
             subcategoryId,
             bookname,
-            price
+            price,
         }
         book = new Book(bookFields)
         book.save()
