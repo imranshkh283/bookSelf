@@ -67,7 +67,8 @@ export const read : RequestHandler = async (req:Request, res: Response, next: Ne
     try {
         let cat = await Category.find();
         if(cat){
-            return res.status(HttpStatusCodes.OK).json({data:cat})
+            let count : number = cat.length
+            return res.status(HttpStatusCodes.OK).json({data:cat, count: count})
         }
     } catch (err) {
         console.error(err.message);

@@ -65,7 +65,12 @@ export const update: RequestHandler = async (req:Request, res:Response, next:Nex
 export const read : RequestHandler = async (req:Request, res:Response, next:NextFunction) => {
     try {
         let language = await Language.find();
-        res.status(HttpStatusCodes.OK).json({data : language })
+        if(language){
+            let count : number = language.length
+            res.status(HttpStatusCodes.OK).json({data : language, count:count,})
+        } else {
+            return res.status(HttpStatusCodes.OK).json({data: "No Data"})
+        }
     } catch (err) {
         console.error(err.message);
         res.status(HttpStatusCodes.INTERNAL_SERVER_ERROR).send("Server Error");
